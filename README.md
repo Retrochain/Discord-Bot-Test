@@ -10,10 +10,6 @@ if you ever, for some reason, want to use this bot.
   
 ***He responds to new users via 1 of many messages***  
   
-***He can also respond to these specific commands***  
-
-- <ins>**UTDiddy** question</ins>  
-- <ins>**UTDiddy** reply</ins>  
-- <ins>**UTDiddy** thoughts</ins>  
+***He can also respond to any message that begins with UTDiddy***  
 
 He is built on discord's python library and uses both dotenv and flask for some minor details  
