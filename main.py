@@ -50,64 +50,45 @@ async def on_member_join(member):
 # This event basically reads every message that comes its way and sends an appropriate reply
 @bot.event
 async def on_message(message):
-    # Don't want to cause an infinite loop? Then don't let the bot reply to itself!
+   # Don't want to cause an infinite loop? Then don't let the bot reply to itself!
    if message.author == bot.user:
        return
-   
+
+   # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
+   await bot.process_commands(message)
+
    # This makes it so that there's a 1 in 5 chance of Bolu getting Pregnant Man reacted
    if(random.randint(0, 4) == 2) and (message.author != bot.user):
         if message.author.id == 971593663333429338:
             await message.add_reaction('🫃') 
-
-   # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
-   if(random.randint(0, 4) == 2) and (message.author != bot.user):
-        phrases = ['I have a thicc ass', 'My ass is huge', 'Wanna see me clap my ass cheeks?', 
-                   'I wish I could hang out with y\'all', 'I like to watch my shows in 2x speed',
-                   'I can say the N-word', 'I got a big ass forehead', 'Im Miles Morales, but you can call me the UTDiddy', 
-                   'I quite like oil', '@everyone: OIL UP!', 'I think I\'m gonna wear my skin tight Miles Morales costume to a kids park today',
-                   'I don\'t regret deleting Chill Vibe Rant', 'I wanna play Among Us', 'Codenames anyone?', 'They call me The Flash cuz I flash people in costume',
-                   'Ain\'t no party like the UTDiddy party!', 'Anyone got some fried chicken?', 'I be gooning all up in this shit']
-        await message.channel.send(random.choice(phrases))
-
-    # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
-   await bot.process_commands(message)
-
-# Responds to the user when the hello command is used
-@bot.command()
-async def hello(ctx):
-    await ctx.send(f"I\'m gonna touch you {ctx.author.mention}")
     
-# Responds to the user's question by giving a snarky reply
-# There are three variations to the same command
-
-replys = ['Idk, do I look smart to you?', "Can you talk in 2x speed?", "I was too busy listening to Dax to hear your question",
+   # Replies for the bot
+   replys = ['Idk, do I look smart to you?', "Can you talk in 2x speed?", "I was too busy listening to Dax to hear your question",
           "I think the solution is oiling up!", "I graduated so I could care less about this", "Just cuz I\'m old and wrinkly doesn\'t mean I\'m wise!", 
-          "I miss Chill Vibe Rant", "I got a better question: When can I be server owner @retrochain????", "You\'re getting touched the next time I see you"]
-    
-# Source - https://stackoverflow.com/a
-# Posted by Łukasz Kwieciński
-# Retrieved 2025-11-16, License - CC BY-SA 4.0
-
-@bot.event
-async def on_message(message): 
-    # Adding `<!@{id_here}>` so it's gonna work whether it's mentioned by nick or simply by the name
-    if message.content in [f'<!@{bot.user.id}>', f'<@{bot.user.id}>']:
-        await message.channel.send('Hello there')
-
-    await bot.process_commands(message)
-
-@bot.command()
-async def thoughts(ctx):
-    await ctx.reply(random.choice(replys))
-    
-@bot.command()
-async def question(ctx):
-    await ctx.reply(random.choice(replys))
-
-@bot.command()
-async def reply(ctx):
-    await ctx.reply(random.choice(replys))
-
+          "I miss Chill Vibe Rant", "I got a better question: When can I be server owner????", "You\'re getting touched the next time I see you",
+          "My hands are chapped rn, can't type", "Working on my ass, ttyl", "I don\'t get it", "Dumbass question, kill your self", "Fuck you",
+          "Hold on lemme ask ChatGPT rq", f"I\'m gonna touch you {message.author.mention}", f"Aight {message.author.mention}, time to oil up 💦"]
+   
+   # Phrases for the bot
+   phrases = ['I have a thicc ass', 'My ass is huge', 'Wanna see me clap my ass cheeks?', 
+            'I wish I could hang out with y\'all', 'I like to watch my shows in 2x speed',
+            'I can say the N-word', 'I got a big ass forehead', 'Im Miles Morales, but you can call me the UTDiddy', 
+            'I quite like oil', '@everyone: OIL UP!', 'I think I\'m gonna wear my skin tight Miles Morales costume to a kids park today',
+            'I don\'t regret deleting Chill Vibe Rant', 'I wanna play Among Us', 'Codenames anyone?', 'They call me The Flash cuz I flash people in costume',
+            'Ain\'t no party like the UTDiddy party!', 'Anyone got some fried chicken?', 'I be gooning all up in this shit', 'I\'m clearly not welcomed here it seems',
+            'Did I mention my ass is huge btw?', 'I wish I was good at wordle', 'I\'m the best at paintball']
+   
+   # If the messages starts with UTDiddy, a random reply is sent
+   if message.content.startswith('UTDiddy'):
+       await message.channel.send(random.choice(replys))
+   
+   # Replies to the user when the bot is mentioned
+   elif(bot.user in message.mentions):
+        await message.channel.send(random.choice(replys))
+        
+   # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
+   elif(random.randint(0, 4) == 2) and (message.author != bot.user):
+        await message.channel.send(random.choice(phrases))
 
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
