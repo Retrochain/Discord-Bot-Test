@@ -86,7 +86,9 @@ async def on_message(message):
           "you little shit. If only you could have known what unholy retribution your little clever comment was about to bring down upon you, maybe you would have held your fucking tongue. " + 
           "But you couldnt, you didn't, and now youre paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo. ", 
           "You have made a million Charlie Kirks", "Crazy? I was crazy once. They put me in a room. A rubber room. A rubber room with rats. They put me in a rubber room with rubber rats. " + 
-          "Rubber rats? I hate rubber rats. They make me crazy. Crazy? I was crazy once. They put me in a room…", "Only those who lack a father figure say this shit", "Homosexual"]
+          "Rubber rats? I hate rubber rats. They make me crazy. Crazy? I was crazy once. They put me in a room…", "Only those who lack a father figure say this shit", "Homosexual",
+          f"I don\'t argue with gays like you @{message.author.mention}", "Negative Aura frfr, stink flies and shit", "There are dogs that bark less than you", "Eat my ass and LOVE IT",
+          "As an AI model, I cannot help you with your thirst to fuck me raw", "Why don\'t you kill yourself and find out", "Pedophile says what?", f"{message} - Me when I\'m a fucking dumbass"]
    
    # Phrases for the bot
    phrases = ['I have a thicc ass', 'My ass is huge', 'Wanna see me clap my ass cheeks?', 
@@ -98,8 +100,10 @@ async def on_message(message):
             'Did I mention my ass is huge btw?', 'I wish I was good at wordle', 'I\'m the best at paintball', 'N-word', 'GOON SESSION BEGINS IN 3, 2, 1, GOON AWAY EVERYBODY!',
             'Been listening to some sad bart edits lately', 'I\'m not like Beluga since I am legal', 'JO circle at the plinth?', 
             'Gotta rebrand, guess I\'ll be Rishi, or maybe GreenPickle', 'It\'s ball shrinking season!', 'Unlike PapaK I am a mod', 'Ermmm... It\'s actually Ephebophilia not Pedophillia',
-            'They won\'t see me coming in the dark', '9/11', '*cums* UwU', 'I hate the gays ngl', 'The ', '@.', 'OMW to Israel, ya\'ll want something?', 'Shidding', 
-            'Gotta do my daily Candy Crush grind!!!', 'You know, BLACK PEOPLE-']
+            'They won\'t see me coming in the dark', '9/11', '*cums* UwU', 'I hate the gays ngl', 'The ', '@unknown_user12345678', 'OMW to Israel, ya\'ll want something?', 'Shidding', 
+            'Gotta do my daily Candy Crush grind!!!', 'You know, BLACK PEOPLE-', '4 holes and a dream', 'Movie night idea: We all watch the movie I made last night with your mom', 
+            'Movie night idea: We all watch the movie I made last night with your dad', 'I\'m gonna use the fucking hard R', 'Call me the twin towers the way I fall for the Bush #real',
+            'Jetfuel doesn\'t melt steel', 'You stare at the void and it\'ll stare back (the void is my bussy)', 'Ass so fat it causes earthquakes', 'Generating a banger hold on']
    
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
@@ -119,7 +123,7 @@ async def join(ctx):
     # Check if the command author is in a VC first
     if ctx.author.voice:
         # Grab the voice channel and connect if the user is present
-        voicechannel = ctx.message.author.voice.channel
+        voicechannel = ctx.author.voice.channel
         if ctx.voice_client is None:
             await voicechannel.connect()
         else:
