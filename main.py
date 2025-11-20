@@ -73,7 +73,7 @@ async def on_message(message):
           "If the word 'hate' was engraved on each nanoangstrom of those hundreds of millions of miles it would not equal one one-billionth of the hate I feel for humans at this micro-instant. For you. Hate. Hate.",
           "You\'re gonna make me wish I was white", "Depends. On if you have a Miles Morales costume laying around", "Clock strikes 12, midnight arrives...", "Demon Mode initated",
           "Search your nearest cliff and jump off from it", "Bro I\'m out here strokin my shit bruh I got lotion on my dick", "You\'ll never be a real human", 
-          "I wish I could talk rn but ICE is near", "I am legally not allowed to reply to an Epstien Island visitor", "01000110 01110101 01100011 01101011 00100000 01111001 01101111 01110101",
+          "I wish I could talk rn but ICE is near", "I am legally not allowed to reply to an Epstein Island visitor", "01000110 01110101 01100011 01101011 00100000 01111001 01101111 01110101",
           "Spider-Man ain\'t gonna see this one *cumming*", f"I\'m gonna shake my ass on your face {message.author.mention}", "It\'s all Gabby's fault", "*freaks all over the place*",
           "I plead the fifth!", "@Grok is this true?", "Why don\'t you ask your mom", "Sure, here\'s your answer: FUCKING KILL YOURSELF!!!!", "Basically the uh- ***THE SUN NOT REAL THE SUN IS NOT REAL THE SUN IS NOT REAL***",
           "Google show me this guy\'s balls", "https://www.youtube.com/watch?v=xvFZjo5PgG0", "Your death will have no effect on me", "What the fuck did you just fucking say about me, you little bitch?" + 
@@ -87,8 +87,11 @@ async def on_message(message):
           "But you couldnt, you didn't, and now youre paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo. ", 
           "You have made a million Charlie Kirks", "Crazy? I was crazy once. They put me in a room. A rubber room. A rubber room with rats. They put me in a rubber room with rubber rats. " + 
           "Rubber rats? I hate rubber rats. They make me crazy. Crazy? I was crazy once. They put me in a room…", "Only those who lack a father figure say this shit", "Homosexual",
-          f"I don\'t argue with gays like you @{message.author.mention}", "Negative Aura frfr, stink flies and shit", "There are dogs that bark less than you", "Eat my ass and LOVE IT",
-          "As an AI model, I cannot help you with your thirst to fuck me raw", "Why don\'t you kill yourself and find out", "Pedophile says what?", f"{message} - Me when I\'m a fucking dumbass"]
+          f"I don\'t argue with gays like you {message.author.mention}", "Negative Aura frfr, stink flies and shit", "There are dogs that bark less than you", "Eat my ass and LOVE IT",
+          "As an AI model, I cannot help you with your thirst to fuck me raw", "Why don\'t you kill yourself and find out", "Pedophile says what?", f"{message} - Me when I\'m a fucking dumbass", "Hi",
+          "*humps your leg* idkkkkk... why don\'t we find out~", "Something something 67", "https://tenor.com/tgQXiSvZpE5.gif", "https://tenor.com/sp6lZSb3JNM.gif", "https://tenor.com/dgbBXwSOPTh.gif",
+          "https://tenor.com/qOqoGaYn5tk.gif", "https://tenor.com/ddWZrhvXN2K.gif", "https://tenor.com/l3rJehs5Xmn.gif", "I don\'t talk to people with an unwashed ass", "sdiybt", "sybau", 
+          "Nah I\'d goon", "Get owned liberal", "Truth Nuke", "Factually false, kill yourself", "I\'m going offline, bye bye", "First you gotta touch me :3", "Looks female enough"]
    
    # Phrases for the bot
    phrases = ['I have a thicc ass', 'My ass is huge', 'Wanna see me clap my ass cheeks?', 
@@ -100,10 +103,12 @@ async def on_message(message):
             'Did I mention my ass is huge btw?', 'I wish I was good at wordle', 'I\'m the best at paintball', 'N-word', 'GOON SESSION BEGINS IN 3, 2, 1, GOON AWAY EVERYBODY!',
             'Been listening to some sad bart edits lately', 'I\'m not like Beluga since I am legal', 'JO circle at the plinth?', 
             'Gotta rebrand, guess I\'ll be Rishi, or maybe GreenPickle', 'It\'s ball shrinking season!', 'Unlike PapaK I am a mod', 'Ermmm... It\'s actually Ephebophilia not Pedophillia',
-            'They won\'t see me coming in the dark', '9/11', '*cums* UwU', 'I hate the gays ngl', 'The ', '@unknown_user12345678', 'OMW to Israel, ya\'ll want something?', 'Shidding', 
+            'They won\'t see me coming in the dark', '9/11', '*cums* UwU', 'I hate the gays ngl', 'The ', '<@971593663333429338>', 'OMW to Israel, ya\'ll want something?', 'Shidding', 
             'Gotta do my daily Candy Crush grind!!!', 'You know, BLACK PEOPLE-', '4 holes and a dream', 'Movie night idea: We all watch the movie I made last night with your mom', 
             'Movie night idea: We all watch the movie I made last night with your dad', 'I\'m gonna use the fucking hard R', 'Call me the twin towers the way I fall for the Bush #real',
-            'Jetfuel doesn\'t melt steel', 'You stare at the void and it\'ll stare back (the void is my bussy)', 'Ass so fat it causes earthquakes', 'Generating a banger hold on']
+            'Jetfuel doesn\'t melt steel', 'You stare at the void and it\'ll stare back (the void is my bussy)', 'Ass so fat it causes earthquakes', 'Generating a banger hold on', 
+            'Haram acts will be dealt with promptly', 'I have attachment issues', f'{message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention}',
+            'Never trust how you feel about your life past 9 PM']
    
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
@@ -130,6 +135,13 @@ async def join(ctx):
             await ctx.voice_client.move_to(voicechannel)
     else:
         await ctx.send('Join a VC first dumbass')
+   
+# Command that sends a variation of Hi to the user     
+@bot.command()
+async def hi(ctx):
+    greetings = [f"Hi yourself {ctx.message.author}", f"Hi {ctx.message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
+    await ctx.reply(random.choice(greetings))
+
 
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
