@@ -56,6 +56,10 @@ async def on_message(message):
 
    # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
    await bot.process_commands(message)
+ 
+   # If the message is a command, stop here so no extra replies occur
+   if message.content.startswith(bot.command_prefix):
+       return
 
    # This makes it so that there's a 1 in 5 chance of Bolu getting Pregnant Man reacted
    if(random.randint(0, 4) == 2) and (message.author != bot.user):
