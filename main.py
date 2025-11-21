@@ -38,10 +38,6 @@ async def on_message(message):
 
    # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
    await bot.process_commands(message)
- 
-   # If the message is a command, stop here so no extra replies occur
-   if message.content.contains('UTDiddy join'):
-       return
 
    # This makes it so that there's a 1 in 5 chance of Bolu getting Pregnant Man reacted
    if(random.randint(0, 4) == 2) and (message.author != bot.user):
@@ -101,14 +97,14 @@ async def on_message(message):
    
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
-       await message.channel.send(random.choice(replys))
+       if message.content.contains('hi' or 'hey' or 'hello' or 'Hey' or 'Hi' or 'Hello'):
+        await message.channel.send(random.choice(greetings))
+       else:
+        await message.channel.send(random.choice(replys))
    
    # Replies to the user when the bot is mentioned
    elif(bot.user in message.mentions):
         await message.channel.send(random.choice(replys))
-        
-   elif message.content.contains('hi' or 'hey' or 'hello' or 'Hey' or 'Hi' or 'Hello'):
-        await message.channel.send(random.choice(greetings))
        
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
    elif(random.randint(0, 4) == 2) and (message.author != bot.user):
