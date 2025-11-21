@@ -29,24 +29,6 @@ bot = commands.Bot(command_prefix='UTDiddy ', intents=intents)
 async def on_ready():
     print("Ready to go!")
 
-# Displays a welcome message when a user joins
-@bot.event
-async def on_member_join(member):
-    # Get the welcome channel ID
-    welcomechannel = bot.get_channel(1387631583900602491)
-    
-    # If the bot doesn't have the channel ID yet, fetch it
-    if welcomechannel is None:
-        welcomechannel = await bot.fetch_channel(1387631583900602491)
-    
-    # An array that contains random welcome messages
-    welcomemessages = [f'Did I know you from Chill Vibe Rant {member.name}?', f'Oh great, it\'s {member.name}',
-                       f'Oh shit, who gave {member.name} access to this server 😨', f'So, {member.name}, this is my goon cave.',
-                       f'@everyone: Since {member.name} joined, I should let you know they were the reason Chill Vibe Rant got deleted!']
-    
-    # Display a random welcome message!
-    await welcomechannel.send(random.choice(welcomemessages))
-    
 # This event basically reads every message that comes its way and sends an appropriate reply
 @bot.event
 async def on_message(message):
@@ -114,6 +96,9 @@ async def on_message(message):
             'Haram acts will be dealt with promptly', 'I have attachment issues', f'{message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention}',
             'Never trust how you feel about your life past 9 PM']
    
+   # Potential greeting phrases for user
+   greetings = [f"Hi yourself {message.author}", f"Hi {message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
+   
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
        await message.channel.send(random.choice(replys))
@@ -122,6 +107,9 @@ async def on_message(message):
    elif(bot.user in message.mentions):
         await message.channel.send(random.choice(replys))
         
+   elif message.content.contains('hi' or 'hey' or 'hello' or 'Hey' or 'Hi' or 'Hello'):
+        await message.channel.send(random.choice(greetings))
+       
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
    elif(random.randint(0, 4) == 2) and (message.author != bot.user):
         await message.channel.send(random.choice(phrases))
@@ -139,13 +127,6 @@ async def join(ctx):
             await ctx.voice_client.move_to(voicechannel)
     else:
         await ctx.send('Join a VC first dumbass')
-   
-# Command that sends a variation of Hi to the user     
-@bot.command()
-async def hi(ctx):
-    greetings = [f"Hi yourself {ctx.message.author}", f"Hi {ctx.message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
-    await ctx.reply(random.choice(greetings))
-
 
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
