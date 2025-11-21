@@ -97,9 +97,10 @@ async def on_message(message):
    
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
-       if message.content.contains('hi' or 'hey' or 'hello' or 'Hey' or 'Hi' or 'Hello'):
+    # If a greeting is detected, reply with a greeting
+    if any(word in message.content.lower() for word in ["hi", "hey", "hello", "yo", "wassup"]):
         await message.channel.send(random.choice(greetings))
-       else:
+    else:
         await message.channel.send(random.choice(replys))
    
    # Replies to the user when the bot is mentioned
