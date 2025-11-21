@@ -95,18 +95,22 @@ async def on_message(message):
    # If the messages starts with UTDiddy, a random reply is sent
    if message.content.startswith('UTDiddy'):
     # If a greeting is detected, reply with a greeting
-    if any(word in message.content.lower() for word in [" hi ", " hey ", " hello ", " yo ", " wassup "]):
+    words = message.content.lower().split()
+    if any(w in ["hi", "hey", "hello"] for w in words):
         await message.channel.send(random.choice(greetings))
     else:
         await message.channel.send(random.choice(replys))
+    return
    
    # Replies to the user when the bot is mentioned
-   elif(bot.user in message.mentions):
+   if(bot.user in message.mentions):
         await message.channel.send(random.choice(replys))
+        return
        
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
-   elif(random.randint(0, 4) == 2) and (message.author != bot.user):
+   if(random.randint(0, 4) == 2) and (message.author != bot.user):
         await message.channel.send(random.choice(phrases))
+        return
 
    # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
    await bot.process_commands(message)
