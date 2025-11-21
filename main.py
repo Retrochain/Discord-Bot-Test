@@ -40,7 +40,7 @@ async def on_message(message):
    await bot.process_commands(message)
  
    # If the message is a command, stop here so no extra replies occur
-   if message.content.startswith(bot.command_prefix):
+   if message.content.contains('UTDiddy join'):
        return
 
    # This makes it so that there's a 1 in 5 chance of Bolu getting Pregnant Man reacted
