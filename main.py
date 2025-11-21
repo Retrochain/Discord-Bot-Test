@@ -36,9 +36,6 @@ async def on_message(message):
    if message.author == bot.user:
        return
 
-   # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
-   await bot.process_commands(message)
-
    # This makes it so that there's a 1 in 5 chance of Bolu getting Pregnant Man reacted
    if(random.randint(0, 4) == 2) and (message.author != bot.user):
         if message.author.id == 971593663333429338:
@@ -110,6 +107,9 @@ async def on_message(message):
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
    elif(random.randint(0, 4) == 2) and (message.author != bot.user):
         await message.channel.send(random.choice(phrases))
+
+   # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
+   await bot.process_commands(message)
 
 # Command that allows the bot to join the VC when "summoned"
 @bot.command()
