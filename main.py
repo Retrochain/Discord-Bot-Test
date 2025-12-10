@@ -70,7 +70,9 @@ async def on_message(message):
           "As an AI model, I cannot help you with your thirst to fuck me raw", "Why don\'t you kill yourself and find out", "Pedophile says what?", f"{message} - Me when I\'m a fucking dumbass", "Hi",
           "*humps your leg* idkkkkk... why don\'t we find out~", "Something something 67", "https://tenor.com/tgQXiSvZpE5.gif", "https://tenor.com/sp6lZSb3JNM.gif", "https://tenor.com/dgbBXwSOPTh.gif",
           "https://tenor.com/qOqoGaYn5tk.gif", "https://tenor.com/ddWZrhvXN2K.gif", "https://tenor.com/l3rJehs5Xmn.gif", "I don\'t talk to people with an unwashed ass", "sdiybt", "sybau", 
-          "Nah I\'d goon", "Get owned liberal", "Truth Nuke", "Factually false, kill yourself", "I\'m going offline, bye bye", "First you gotta touch me :3", "Looks female enough"]
+          "Nah I\'d goon", "Get owned liberal", "Truth Nuke", "Factually false, kill yourself", "I\'m going offline, bye bye", "First you gotta touch me :3", "Looks female enough", 
+          "https://tenor.com/view/could-you-repeat-that-meme-shitpost-what-richard-gif-17196939357970871257", "https://tenor.com/view/woody-life-said-woodytoystory-gif-5602313878548421067",
+          "https://tenor.com/view/smelly-gif-8910926518937547745", "https://tenor.com/view/cat-cat-meme-funny-cat-cat-eating-cat-eating-chips-gif-10455465908695706650"]
    
    # Phrases for the bot
    phrases = ['I have a thicc ass', 'My ass is huge', 'Wanna see me clap my ass cheeks?', 
@@ -87,7 +89,7 @@ async def on_message(message):
             'Movie night idea: We all watch the movie I made last night with your dad', 'I\'m gonna use the fucking hard R', 'Call me the twin towers the way I fall for the Bush #real',
             'Jetfuel doesn\'t melt steel', 'You stare at the void and it\'ll stare back (the void is my bussy)', 'Ass so fat it causes earthquakes', 'Generating a banger hold on', 
             'Haram acts will be dealt with promptly', 'I have attachment issues', f'{message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention}',
-            'Never trust how you feel about your life past 9 PM']
+            'Never trust how you feel about your life past 9 PM', '67', ':nerd:']
    
    # Potential greeting phrases for user
    greetings = [f"Hi yourself {message.author}", f"Hi {message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
@@ -96,10 +98,11 @@ async def on_message(message):
    if message.content.startswith('UTDiddy'):
     # If a greeting is detected, reply with a greeting
     words = message.content.lower().split()
-    if any(w in ["hi", "hey", "hello"] for w in words):
+    if any(w in ["hi", "hey", "hello", "sup"] for w in words):
         await message.channel.send(random.choice(greetings))
     else:
         await message.channel.send(random.choice(replys))
+        return
     return
    
    # Replies to the user when the bot is mentioned
