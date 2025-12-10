@@ -100,10 +100,7 @@ async def on_message(message):
     words = message.content.lower().split()
     if any(w in ["hi", "hey", "hello", "sup"] for w in words):
         await message.channel.send(random.choice(greetings))
-    else:
-        await message.channel.send(random.choice(replys))
         return
-    return
    
    # Replies to the user when the bot is mentioned
    if(bot.user in message.mentions):
