@@ -22,7 +22,7 @@ intents.message_content = True
 intents.members = True
 
 # Create the bot and give it a prefix
-bot = commands.Bot(command_prefix='UTDiddy ', intents=intents)
+bot = commands.Bot(command_prefix='Bolu ', intents=intents)
 
 # Message displayed when bot is running
 @bot.event
