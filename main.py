@@ -95,7 +95,7 @@ async def on_message(message):
    greetings = [f"Hi yourself {message.author}", f"Hi {message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
    
    # If the messages starts with UTDiddy, a random reply is sent
-   if message.content.startswith('UTDiddy'):
+   if message.content.startswith('UTDiddy '):
     # If a greeting is detected, reply with a greeting
     words = message.content.lower().split()
     if any(w in ["hi", "hey", "hello", "sup"] for w in words):
