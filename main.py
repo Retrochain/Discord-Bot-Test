@@ -107,7 +107,7 @@ async def on_message(message):
    
    # If the messages starts with UTDiddy or if the bot is mentioned, it sends a reply to the user
    if(bot.user in message.mentions or message.content.startswith('UTDiddy')):
-        await message.author.reply(random.choice(replies or phrases))
+        await message.reply(random.choice(replies))
         return
        
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
@@ -241,7 +241,7 @@ async def play(ctx, sound_name: str):
         
 # Command that lists all the available sounds
 @bot.command()
-async def list(ctx):
+async def sounds(ctx):
     soundFiles = [
         os.path.splittext(f)[0]
         for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
@@ -261,19 +261,40 @@ bot.remove_command('help')
 # Command that lists all the available commands
 @bot.command()
 async def help(ctx):
-    await ctx.send("**Prefix: 'Bolu '**\n " + 
-                   "Available commands:\n " + 
-                   "```\n" + 
-                   "join: Connects the bot to the user's current VC" +
-                   "leave: Disconnects the bot from the current VC" +
-                   "play: Plays a specific sound from the available sound library" +
-                   "list: Lists all the available sounds" +
-                   "greeting: Greets the user" + 
-                   "\n```\n" + 
-                   "*The bot also plays a sound randomly every 5-15 mins when in a VC.*\n" +
-                   "*The bot responds when it is pinged, mentioned, replied to, or if a sentence starts with UTDiddy.*\n" +
-                   f"*The bot will also send messages randomly when people are talking in the {ctx.channel} channel.*\n")
-    
+    embed = discord.Embed(
+        title="Bolu Bot Help",
+        description="**Prefix: 'Bolu '**",
+        color=discord.Color.purple()  # This sets the embed accent color to purple
+    )
+
+    # Add a field for commands
+    embed.add_field(
+        name="Available Commands",
+        value=(
+            "```\n"
+            "join: Connects the bot to the user's current VC\n"
+            "leave: Disconnects the bot from the current VC\n"
+            "play: Plays a specific sound from the available sound library\n"
+            "sounds: Lists all the available sounds\n"
+            "greeting: Greets the user\n"
+            "```"
+        ),
+        inline=False
+    )
+
+    # Add a field for additional info
+    embed.add_field(
+        name="Additional Info",
+        value=(
+            "*The bot also plays a sound randomly *every 5-15 mins* when in a VC.*\n"
+            "*The bot responds when it is pinged, mentioned, replied to, or if a sentence *starts with UTDiddy*.*\n"
+            f"*The bot will also send messages randomly when people are talking in the *{ctx.channel}* channel.*"
+        ),
+        inline=False
+    )
+
+    await ctx.send(embed=embed)
+   
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
