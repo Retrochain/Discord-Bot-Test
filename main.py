@@ -206,6 +206,37 @@ async def leave(ctx):
             sound_task = None
     else:
         await ctx.send("I'm not in your VC broski")
+        
+# Command to play a specific sound
+@bot.command()
+async def playsound(ctx, sound_name: str):
+    # Check if the user is in a voice channel
+    if not ctx.author.voice:
+        await ctx.send("Join a VC first dumbass")
+        return
+
+    # Connect to VC if bot is not connected
+    vc = ctx.voice_client
+    if not vc:
+        vc = await ctx.author.voice.channel.connect()
+    elif vc.channel != ctx.author.voice.channel:
+        await vc.move_to(ctx.author.voice.channel)
+
+    # Build path to the requested sound
+    sound_path = os.path.join("sounds", f"{sound_name}.ogg")
+    
+    # Check if the file exists
+    if not os.path.isfile(sound_path):
+        await ctx.send(f"Sound `{sound_name}` not found!")
+        return
+
+    # Play the sound
+    if not vc.is_playing():
+        source = FFmpegPCMAudio(sound_path, executable=os.path.join("ffmpeg", "ffmpeg"))
+        vc.play(source)
+        await ctx.send(f"Now playing `{sound_name}` 🎵")
+    else:
+        await ctx.send("Already playing something, wait until it finishes!")
 
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
