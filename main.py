@@ -256,6 +256,8 @@ async def greeting(ctx):
     greetings = [f"Hi yourself {ctx.message.author}", f"Hi {ctx.message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
     await ctx.channel.send(random.choice(greetings))
 
+bot.remove_command('help')
+
 # Command that lists all the available commands
 @bot.command()
 async def help(ctx):
