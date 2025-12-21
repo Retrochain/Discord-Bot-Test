@@ -262,8 +262,8 @@ bot.remove_command('help')
 @bot.command()
 async def help(ctx):
     embed = discord.Embed(
-        title="Bolu Bot Help",
-        description="**Prefix: 'Bolu '**",
+        title="UTDiddy Bot Help",
+        description="**Prefix: 'Bolu [command]'**",
         color=discord.Color.purple()  # This sets the embed accent color to purple
     )
 
@@ -271,13 +271,12 @@ async def help(ctx):
     embed.add_field(
         name="Available Commands",
         value=(
-            "```\n"
-            "join: Connects the bot to the user's current VC\n"
-            "leave: Disconnects the bot from the current VC\n"
-            "play: Plays a specific sound from the available sound library\n"
-            "sounds: Lists all the available sounds\n"
-            "greeting: Greets the user\n"
-            "```"
+            "*__join__*: Connects the bot to the user's current VC\n"
+            "*__leave__*: Disconnects the bot from the current VC\n"
+            "*__play__*: Plays a specific sound from the available sound library\n"
+            "*__sounds__*: Lists all the available sounds\n"
+            "*__greeting__*: Greets the user\n"
+            ""
         ),
         inline=False
     )
@@ -286,11 +285,12 @@ async def help(ctx):
     embed.add_field(
         name="Additional Info",
         value=(
-            "*The bot also plays a sound randomly *every 5-15 mins* when in a VC.*\n"
-            "*The bot responds when it is pinged, mentioned, replied to, or if a sentence *starts with UTDiddy*.*\n"
-            f"*The bot will also send messages randomly when people are talking in the *{ctx.channel}* channel.*"
+            "The bot also plays a sound randomly **every 5-15 mins** when in a VC.\n"
+            "The bot responds when it is pinged, mentioned, replied to, or if a sentence **starts with UTDiddy**.\n"
+            f"The bot will also send messages randomly when people are talking in the **{ctx.channel}** channel."
         ),
-        inline=False
+        inline=False,
+        
     )
 
     await ctx.send(embed=embed)
