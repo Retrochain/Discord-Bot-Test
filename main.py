@@ -26,6 +26,10 @@ intents.members = True
 # Create the bot and give it a prefix
 bot = commands.Bot(command_prefix='Bolu ', intents=intents)
 
+# Path to bundled FFmpeg
+FFMPEG_BINARY = os.path.join("ffmpeg", "ffmpeg")  
+
+# Path to sounds folder
 SOUND_FOLDER = "sounds"
 SOUND_INTERVAL = 60  # Time interval in seconds (1 minute)
 
@@ -153,7 +157,7 @@ async def random_sound_loop(guild_id):
 
             if sound_files:
                 sound = random.choice(sound_files)
-                source = FFmpegPCMAudio(os.path.join(SOUND_FOLDER, sound))
+                source = FFmpegPCMAudio(os.path.join(SOUND_FOLDER, sound), executable=FFMPEG_BINARY)
                 vc.play(source)
 
         # We then wait until the next iteration
