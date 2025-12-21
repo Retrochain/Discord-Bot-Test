@@ -32,9 +32,10 @@ FFMPEG_BINARY = os.path.join("ffmpeg", "ffmpeg")
 
 # Path to sounds folder
 SOUND_FOLDER = "sounds"
-SOUND_INTERVAL = 60  # Time interval in seconds (1 minute)
+SOUND_INTERVAL = 10  # Time interval in seconds (1 minute)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-sound_task = None
+soundTask = None
 
 # Message displayed when bot is running
 @bot.event
@@ -151,14 +152,15 @@ async def random_sound_loop(guild_id):
         # We ensure that the bot is not playing a sound already
         if not vc.is_playing():
             # If it is not playing a sound, load and randomly play a sound
-            sound_files = [
-                f for f in os.listdir(SOUND_FOLDER)
+            soundFiles = [
+                f for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
                 if f.endswith((".mp3", ".wav", ".ogg"))
             ]
 
-            if sound_files:
-                sound = random.choice(sound_files)
-                source = FFmpegPCMAudio(os.path.join(SOUND_FOLDER, sound), executable=FFMPEG_BINARY)
+            if soundFiles:
+                sound = random.choice(soundFiles)
+                sound_path = os.path.join(BASE_DIR, SOUND_FOLDER, sound)
+                source = FFmpegPCMAudio(sound_path, executable=FFMPEG_BINARY)
                 vc.play(source)
 
         # We then wait until the next iteration
@@ -166,9 +168,8 @@ async def random_sound_loop(guild_id):
 
 # Function to find the sound at the base directory folder for the app
 def find_sound_file(sound_name):
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     for ext in ["mp3", "wav", "ogg"]:
-        path = os.path.join(BASE_DIR, "sounds", f"{sound_name}.{ext}")
+        path = os.path.join(BASE_DIR, SOUND_FOLDER, f"{sound_name}.{ext}")
         if os.path.isfile(path):
             return path
     return None
@@ -176,7 +177,7 @@ def find_sound_file(sound_name):
 # Command that allows the bot to join the VC when "summoned"
 @bot.command()
 async def join(ctx):
-    global sound_task
+    global soundTask
     
     # Check if the command author is in a VC first
     if ctx.author.voice:
@@ -188,8 +189,8 @@ async def join(ctx):
             await ctx.voice_client.move_to(voicechannel)
         
         # Start sound loop if not already running
-        if sound_task is None or sound_task.done():
-            sound_task = bot.loop.create_task(
+        if soundTask is None or soundTask.done():
+            soundTask = bot.loop.create_task(
                 random_sound_loop(ctx.guild.id)
             )
     else:
@@ -198,7 +199,7 @@ async def join(ctx):
 # Command that allows the bot to leave the VC when told
 @bot.command()
 async def leave(ctx):
-    global sound_task
+    global soundTask
     
     # Check if the command author is in a VC first
     if not ctx.author.voice:
@@ -210,9 +211,9 @@ async def leave(ctx):
         await ctx.voice_client.disconnect()
         
         # End the sound loop if it is not ended already
-        if sound_task:
-            sound_task.cancel()
-            sound_task = None
+        if soundTask:
+            soundTask.cancel()
+            soundTask = None
     else:
         await ctx.send("I'm not in your VC broski")
         
@@ -232,19 +233,29 @@ async def playsound(ctx, sound_name: str):
         await vc.move_to(ctx.author.voice.channel)
 
     # Build path to the requested sound
-    sound_path = find_sound_file(sound_name)
+    soundPath = find_sound_file(sound_name)
     # Check if the file exists
-    if not sound_path:
-        await ctx.send(f"Sound `{sound_name}` not found!")
+    if not soundPath:
+        await ctx.send(f"Couldn't find {sound_name}`")
         return
 
     # Play the sound
     if not vc.is_playing():
-        source = FFmpegPCMAudio(sound_path, executable=os.path.join("ffmpeg", "ffmpeg"))
+        source = FFmpegPCMAudio(soundPath, executable=os.path.join("ffmpeg", "ffmpeg"))
         vc.play(source)
-        await ctx.send(f"Now playing `{sound_name}` 🎵")
+        await ctx.send(f"Now playing `{sound_name}`")
     else:
-        await ctx.send("Already playing something, wait until it finishes!")
+        await ctx.send("Im playing something rn aight gimme a sec")
+        
+# Command that lists all the available sounds
+@bot.command()
+async def soundlist(ctx):
+    soundFiles = [
+                f for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
+                if f.endswith((".mp3", ".wav", ".ogg"))
+            ]
+    soundsList = "\n".join(soundFiles)
+    await ctx.send(f"Available sounds:\n```\n{soundsList}\n```")
 
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
