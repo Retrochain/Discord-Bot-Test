@@ -243,7 +243,7 @@ async def play(ctx, sound_name: str):
 @bot.command()
 async def sounds(ctx):
     soundFiles = [
-        os.path.splittext(f)[0]
+        os.path.splitext(f)[0]
         for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
         if f.endswith((".mp3", ".wav", ".ogg"))
     ]
