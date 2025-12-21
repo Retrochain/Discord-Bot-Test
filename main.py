@@ -105,22 +105,9 @@ async def on_message(message):
             'Haram acts will be dealt with promptly', 'I have attachment issues', f'{message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention} {message.author.mention}',
             'Never trust how you feel about your life past 9 PM', '67', ':nerd:', 'I wish I was a real boy', '@draco4141 got some estrogen?', 'Utter woke nonsense']
    
-   # Potential greeting phrases for user
-   greetings = [f"Hi yourself {message.author}", f"Hi {message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
-   
-   # If the messages starts with UTDiddy, a random reply is sent
-   if message.content.startswith('UTDiddy '):
-    # If a greeting is detected, reply with a greeting
-    words = message.content.lower().split()
-    if any(w in ["hi", "hey", "hello", "sup"] for w in words):
-        await message.channel.send(random.choice(greetings))
-    else:
-        await message.channel.send(random.choice(replies)) 
-    return
-   
-   # Replies to the user when the bot is mentioned
-   if(bot.user in message.mentions):
-        await message.channel.send(random.choice(replies or phrases))
+   # If the messages starts with UTDiddy or if the bot is mentioned, it sends a reply to the user
+   if(bot.user in message.mentions or message.content.startswith('UTDiddy')):
+        await message.author.reply(random.choice(replies or phrases))
         return
        
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
@@ -218,7 +205,7 @@ async def leave(ctx):
         
 # Command to play a specific sound
 @bot.command()
-async def playsound(ctx, sound_name: str):
+async def play(ctx, sound_name: str):
     global soundTask
     
     # Check if the user is in a voice channel
@@ -254,7 +241,7 @@ async def playsound(ctx, sound_name: str):
         
 # Command that lists all the available sounds
 @bot.command()
-async def soundlist(ctx):
+async def list(ctx):
     soundFiles = [
         os.path.splittext(f)[0]
         for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
@@ -263,6 +250,28 @@ async def soundlist(ctx):
     soundsList = "\n".join(soundFiles)
     await ctx.send(f"Available sounds:\n```\n{soundsList}\n```")
 
+@bot.command()
+async def greeting(ctx):
+    # Potential greeting phrases for user
+    greetings = [f"Hi yourself {ctx.message.author}", f"Hi {ctx.message.author}", "I don\'t say hi to the likes of you", "Bye", "Not rn, daddy is a bit busy"]
+    await ctx.channel.send(random.choice(greetings))
+
+# Command that lists all the available commands
+@bot.command()
+async def help(ctx):
+    await ctx.send("**Prefix: 'Bolu '**\n " + 
+                   "Available commands:\n " + 
+                   "```\n" + 
+                   "join: Connects the bot to the user's current VC" +
+                   "leave: Disconnects the bot from the current VC" +
+                   "play: Plays a specific sound from the available sound library" +
+                   "list: Lists all the available sounds" +
+                   "greeting: Greets the user" + 
+                   "\n```\n" + 
+                   "*The bot also plays a sound randomly every 5-15 mins when in a VC.*\n" +
+                   "*The bot responds when it is pinged, mentioned, replied to, or if a sentence starts with UTDiddy.*\n" +
+                   f"*The bot will also send messages randomly when people are talking in the {ctx.channel} channel.*\n")
+    
 # Of course we have to run the bot, so this runs the bot
 webserver.keep_alive()
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
