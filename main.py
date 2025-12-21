@@ -32,7 +32,6 @@ FFMPEG_BINARY = os.path.join("ffmpeg", "ffmpeg")
 
 # Path to sounds folder
 SOUND_FOLDER = "sounds"
-SOUND_INTERVAL = 10  # Time interval in seconds (1 minute)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 soundTask = None
@@ -164,12 +163,12 @@ async def random_sound_loop(guild_id):
                 vc.play(source)
 
         # We then wait until the next iteration
-        await asyncio.sleep(SOUND_INTERVAL)
+        await asyncio.sleep(random.randint(5*60, 15*60))
 
 # Function to find the sound at the base directory folder for the app
-def find_sound_file(sound_name):
+def find_sound_file(soundName):
     for ext in ["mp3", "wav", "ogg"]:
-        path = os.path.join(BASE_DIR, SOUND_FOLDER, f"{sound_name}.{ext}")
+        path = os.path.join(BASE_DIR, SOUND_FOLDER, f"{soundName}.{ext}")
         if os.path.isfile(path):
             return path
     return None
@@ -220,6 +219,8 @@ async def leave(ctx):
 # Command to play a specific sound
 @bot.command()
 async def playsound(ctx, sound_name: str):
+    global soundTask
+    
     # Check if the user is in a voice channel
     if not ctx.author.voice:
         await ctx.send("Join a VC first dumbass")
@@ -231,7 +232,11 @@ async def playsound(ctx, sound_name: str):
         vc = await ctx.author.voice.channel.connect()
     elif vc.channel != ctx.author.voice.channel:
         await vc.move_to(ctx.author.voice.channel)
-
+        
+    # Start the random sound loop if not running
+    if soundTask is None or soundTask.done():
+        soundTask = bot.loop.create_task(random_sound_loop(ctx.guild.id))
+    
     # Build path to the requested sound
     soundPath = find_sound_file(sound_name)
     # Check if the file exists
@@ -251,9 +256,10 @@ async def playsound(ctx, sound_name: str):
 @bot.command()
 async def soundlist(ctx):
     soundFiles = [
-                f for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
-                if f.endswith((".mp3", ".wav", ".ogg"))
-            ]
+        os.path.splittext(f)[0]
+        for f in os.listdir(os.path.join(BASE_DIR,SOUND_FOLDER))
+        if f.endswith((".mp3", ".wav", ".ogg"))
+    ]
     soundsList = "\n".join(soundFiles)
     await ctx.send(f"Available sounds:\n```\n{soundsList}\n```")
 
