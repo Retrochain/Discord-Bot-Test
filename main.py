@@ -8,6 +8,7 @@ import asyncio
 from discord import FFmpegPCMAudio
 import os
 import webserver
+import glob
 
 # Load the env file 
 load_dotenv()
@@ -163,6 +164,14 @@ async def random_sound_loop(guild_id):
         # We then wait until the next iteration
         await asyncio.sleep(SOUND_INTERVAL)
 
+# Function to find the sound at the base directory folder for the app
+def find_sound_file(sound_name):
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    for ext in ["mp3", "wav", "ogg"]:
+        path = os.path.join(BASE_DIR, "sounds", f"{sound_name}.{ext}")
+        if os.path.isfile(path):
+            return path
+    return None
 
 # Command that allows the bot to join the VC when "summoned"
 @bot.command()
@@ -223,10 +232,9 @@ async def playsound(ctx, sound_name: str):
         await vc.move_to(ctx.author.voice.channel)
 
     # Build path to the requested sound
-    sound_path = os.path.join("sounds", f"{sound_name}.ogg")
-    
+    sound_path = find_sound_file(sound_name)
     # Check if the file exists
-    if not os.path.isfile(sound_path):
+    if not sound_path:
         await ctx.send(f"Sound `{sound_name}` not found!")
         return
 
