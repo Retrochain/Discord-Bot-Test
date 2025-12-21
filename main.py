@@ -108,12 +108,10 @@ async def on_message(message):
    # If the messages starts with UTDiddy or if the bot is mentioned, it sends a reply to the user
    if(bot.user in message.mentions or message.content.startswith('UTDiddy')):
         await message.reply(random.choice(replies))
-        return
        
    # This makes it so that there's a 1 in 5 chance of the bot replying with a random phrase
-   if(random.randint(0, 4) == 2) and (message.author != bot.user):
+   elif(random.randint(0, 4) == 2) and (message.author != bot.user):
         await message.channel.send(random.choice(phrases))
-        return
 
    # When we override the on_message event, we need to include this line otherwise the bot won't listen for any other messages
    await bot.process_commands(message)
